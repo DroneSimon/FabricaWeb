@@ -43,6 +43,8 @@ INSTALLED_APPS = (
     'whatsapp',
     'util',
     'accounts',
+    'rest_framework',
+    'rest_framework_mongoengine',
 )
 
 MIDDLEWARE_CLASSES = (
