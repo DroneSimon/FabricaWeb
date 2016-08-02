@@ -13,3 +13,5 @@ class User(Document):
     is_active = BooleanField(default=True)
     date_joined = DateTimeField(required=True)
 
+    def __str__(self):
+        return self.username
