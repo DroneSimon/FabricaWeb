@@ -40,4 +40,15 @@ https://code.djangoproject.com/wiki/WebServices
 La siguiente pagina es para WebServices y whatsapp con python:
 https://github.com/tgalal/yowsup
 
+Django Rest Framework
+=====================
+En los requirements.txt ya esta incluido la instalacion de rest_framework,
+pero algo importante que debemos mencionar es que con mongodb es necesario
+instalar otras herramientas como django-rest-framework-mongoengine, porque
+si tratas de hacer sin el paquete anterior nunca te funcionara, solo
+rest_framework esta pensado para DB SQL y mongoDB es NOSQL.
+
+http://www.django-rest-framework.org/
+https://github.com/umutbozkurt/django-rest-framework-mongoengine
+http://umutbozkurt.github.io/django-rest-framework-mongoengine/index.html
 
