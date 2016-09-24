@@ -14,10 +14,10 @@ class MobileDevice(Document):
     imei_device = StringField(required=False)
     number_phone = IntField(required=False, null=True)
     message = StringField(required=False)
-    date_creation = DateTimeField(required=True)
+    date_creation = DateTimeField(required=False)
     fire_percentage = DecimalField(required=False)
-    is_read = BooleanField(required=True, default=False)
-    is_valid = BooleanField(required=True, default=False)
+    is_read = BooleanField(required=False, default=False)
+    is_valid = BooleanField(required=False, default=False)
 
     def getImage(self):
         try:
