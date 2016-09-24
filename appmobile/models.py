@@ -2,19 +2,21 @@
 from mongoengine import *
 from FabricaWeb.settings import DBNAME
 
+import datetime
+
 connect(DBNAME)
 
 class MobileDevice(Document):
     photo = StringField(required=True)
     latitude = StringField(required=False)
     longitude = StringField(required=False)
-    altitude = DecimalField(required=False)
-    orientation = DecimalField(required=False)
+    altitude = StringField(required=False)
+    orientation = StringField(required=False)
     speed = StringField(required=False)
     imei_device = StringField(required=False)
     number_phone = IntField(required=False, null=True)
     message = StringField(required=False)
-    date_creation = DateTimeField(required=False)
+    date_creation = DateTimeField(required=False, default=datetime.datetime.now)
     fire_percentage = DecimalField(required=False)
     is_read = BooleanField(required=False, default=False)
     is_valid = BooleanField(required=False, default=False)
