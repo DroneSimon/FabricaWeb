@@ -8,7 +8,8 @@ connect(DBNAME)
 
 class MobileDevice(Document):
     photo = StringField(required=True)
-    geoPoint = GeoPointField(required=False, blank=True, null=True)
+    latitude = StringField(required=False, blank=True, null=True)
+    longitude = StringField(required=False, blank=True, null=True)
     altitude = StringField(required=False, blank=True, null=True)
     orientation = StringField(required=False, blank=True, null=True)
     speed = StringField(required=False, blank=True, null=True)
