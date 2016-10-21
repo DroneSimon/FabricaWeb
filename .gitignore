@@ -2,4 +2,6 @@
 *.sqlite3
 *.swp
 *.conf
+whatsappd.py
 logs/*
+whatsapp/utils.py

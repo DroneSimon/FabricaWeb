@@ -7,6 +7,7 @@ from yowsup.layers.protocol_acks.protocolentities      import OutgoingAckProtoco
 from yowsup.layers.protocol_media.protocolentities  import VCardMediaMessageProtocolEntity
 from yowsup.stacks import YowStack
 from yowsup.layers import YowLayerEvent
+from yowsup.layers import EchoLayer
 from yowsup.layers.auth                        import YowCryptLayer, YowAuthenticationProtocolLayer, AuthError
 from yowsup.layers.coder                       import YowCoderLayer
 from yowsup.layers.network                     import YowNetworkLayer
@@ -15,8 +16,8 @@ from yowsup.layers.protocol_media              import YowMediaProtocolLayer
 from yowsup.layers.stanzaregulator             import YowStanzaRegulator
 from yowsup.layers.protocol_receipts           import YowReceiptProtocolLayer
 from yowsup.layers.protocol_acks               import YowAckProtocolLayer
-from yowsup.layers.axolotl                     import YowAxolotlLayer
 from yowsup.common import YowConstants
+from yowsup.stacks import  YowStackBuilder
 from yowsup import env
 
 class MessageReceived(Exception):
@@ -50,10 +51,10 @@ class ReceiveLayer(YowInterfaceLayer):
                 self.onMediaMessage(messageProtocolEntity)
             else:
                 print 'Tipo de dato desconocido: ' + messageProtocolEntity.getType()
-    
+
     def onTextMessage(self,messageProtocolEntity):
         receipt = OutgoingReceiptProtocolEntity(messageProtocolEntity.getId(), messageProtocolEntity.getFrom())
-            
+
         outgoingMessageProtocolEntity = TextMessageProtocolEntity(
             messageProtocolEntity.getBody(),
             to = messageProtocolEntity.getFrom())
@@ -87,13 +88,13 @@ class ReceiveLayer(YowInterfaceLayer):
 class YowsupReceiveStack(object):
 
     def __init__(self, credentials):
+        """
         layers = (ReceiveLayer,
                   (YowAuthenticationProtocolLayer,
                    YowMessagesProtocolLayer,
                    YowReceiptProtocolLayer,
                    YowAckProtocolLayer,
                    YowMediaProtocolLayer),
-                  YowAxolotlLayer,
                   YowCoderLayer,
                   YowCryptLayer,
                   YowStanzaRegulator,
@@ -103,7 +104,12 @@ class YowsupReceiveStack(object):
         self.stack.setProp(YowAuthenticationProtocolLayer.PROP_CREDENTIALS, credentials)
         self.stack.setProp(YowNetworkLayer.PROP_ENDPOINT, YowConstants.ENDPOINTS[0])
         self.stack.setProp(YowCoderLayer.PROP_DOMAIN, YowConstants.DOMAIN)
-        self.stack.setProp(YowCoderLayer.PROP_RESOURCE, env.CURRENT_ENV.getResource())
+"""
+        stackBuilder = YowStackBuilder()
+
+        self.stack = stackBuilder.pushDefaultLayers(True).push(EchoLayer).build()
+        self.stack.setCredentials(credentials)
+#        self.stack.broadcastEvent(YowLayerEvent(YowNetworkLayer.EVENT_STATE_CONNECT))
 
     def start(self):
         #print '-------------------------'
@@ -111,7 +117,7 @@ class YowsupReceiveStack(object):
         #print '-------------------------'
         self.stack.broadcastEvent(YowLayerEvent(YowNetworkLayer.EVENT_STATE_CONNECT))
         try:
-            self.stack.loop(count=4)
+            self.stack.loop()
             #self.stack.loop(timeout = 0.5, discrete = 0.5)
         except AuthError as e:
             print("Authentication Error: %s" % e.message)
