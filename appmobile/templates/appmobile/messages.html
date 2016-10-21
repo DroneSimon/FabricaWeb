@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block refresh %}
 <meta http-equiv="refresh" content="30"/>
 {% endblock %}
 
 {% block header %}
-<h5 class="header center"><a class="card-title activator text-darken-4" href='#'>Descarga la aplicacion</a></h5>
+<h5 class="header center"><a class="card-title activator text-darken-4" href='{% static "app/android-debug.apk" %}'>Descarga la aplicacion</a></h5>
 {% endblock%}
 
 {% block content %}
