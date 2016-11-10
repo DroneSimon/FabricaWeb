@@ -3,6 +3,7 @@
 *.swp
 *.backup
 *.conf
+run.py
 whatsappd.py
 logs/*
 whatsapp/utils.py
