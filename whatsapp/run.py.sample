@@ -1,4 +1,8 @@
-#!/home/benji/Projects/me/LaFabrica/lafabrica-env/bin/python
+#!/home/../env/bin/python
+
+# en la primera linea apuntamos al python de nuestro virtual env
+# donde estan todas nuestras dependencias del proyecto y el python
+# que se encarga de ejecutar el proyecto
 
 from yowsup.stacks import  YowStackBuilder
 from layer import EchoLayer
