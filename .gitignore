@@ -2,6 +2,7 @@
 *.sqlite3
 *.swp
 *.backup
+*.conf
 whatsappd.py
 logs/*
 whatsapp/utils.py
