@@ -11,7 +11,15 @@ import datetime
 
 @login_required
 def index(request):
-    list_msg = MobileDevice.objects.all() #(is_read=False).order_by('-date_creation')
+    list_msg = MobileDevice.objects.filter(is_read=False).order_by('-date_creation') #(is_read=False).order_by('-date_creation')
+    messages = get_pagination(request, list_msg)
+
+    return render(request, 'appmobile/messages.html',
+                  {'messages': messages, 'size': len(list_msg), 'home': True})
+
+@login_required
+def view_all_message(request):
+    list_msg = MobileDevice.objects.order_by('-date_creation')
     messages = get_pagination(request, list_msg)
 
     return render(request, 'appmobile/messages.html',
@@ -20,7 +28,7 @@ def index(request):
 @login_required
 def view_message(request, message_id):
     message = MobileDevice.objects.get(id=message_id)
-    #message.update(is_read=True)
+    message.update(is_read=True)
 
     list_content = MobileDevice.objects.filter(id=message_id)
     #phone_number = WhatsappReceived.objects.get(id=message_id)

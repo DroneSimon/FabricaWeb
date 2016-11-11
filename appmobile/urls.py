@@ -16,7 +16,7 @@ urlpatterns = [
     #url(r'^message/(?P<message_id>\w+)/$', MobileDeviceDetail.as_view(), name='view_message'),
 
     # por templates de django
+    url(r'^messages/all/', views.view_all_message, name='all_messages'),
     url(r'^messages/', views.index, name='messages'),
     url(r'^message/(?P<message_id>\w+)/$', views.view_message, name='view_message'),
-
 ]
