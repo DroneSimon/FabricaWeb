@@ -7,3 +7,4 @@ run.py
 whatsappd.py
 logs/*
 whatsapp/utils.py
+gunicorn_start
