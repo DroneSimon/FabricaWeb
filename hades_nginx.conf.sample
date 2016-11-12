@@ -1,24 +1,31 @@
+upstream hades_local_server {
+  server unix:/home/benji/Projects/me/LaFabrica/FabricaWeb/run/gunicorn.sock fail_timeout=0;
+}
+
 server {
     listen 80;
-    server_name hades.delallajta.com incendios.delallajta.com hades.scesi.org incendios.scesi.org ankanawi.delallajta.com ankanawi.scesi.org;
-    access_log /var/log/nginx/hades.delallajta.com/access.log;
-    error_log /var/log/nginx/hades.delallajta.com/error.log;
+    server_name hades.local;
+    access_log /var/log/nginx/hades.local/access.log;
+    error_log /var/log/nginx/hades.local/error.log;
 
     location /static/ {
-        alias /home/ben/Project/FabricaWeb/staticfiles/;
+        alias /home/benji/Projects/me/LaFabrica/FabricaWeb/staticfiles/;
         expires 30d;
     }
 
     location /static/admin/ {
-        alias /home/ben/Project/environments/fabricaweb-env/lib/python2.7/site-packages;
+        alias /home/benji/Projects/me/LaFabrica/lafabrica-env/lib/python2.7/site-packages;
         expires 30d;
     }
 
     location / {
-	proxy_pass http://127.0.0.1:8001;
-        proxy_set_header X-Forwarded-Host $server_name;
-	proxy_set_header X-Real-IP $remote_addr;
-	add_header P3P 'CP="ALL DSP COR PSAa PSDa OUR NOR ONL UNI COM NAV"';
+	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header Host $http_host;
+	proxy_redirect off;
+	if (!-f $request_filename) {
+		proxy_pass http://hades_local_server;
+		break;
+	}
     }
 }
 
