@@ -10,7 +10,7 @@ import datetime
 
 def home(request):
     if 'user_id' in request.COOKIES:
-        return HttpResponseRedirect('/whatsapp/')
+        return HttpResponseRedirect('/appmobile/messages/')
     else:
         if len(User.objects.all()) == 0:
             return redirect('register')
@@ -23,7 +23,7 @@ def sigin(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             user = User.objects.get(username=username)
-            response = HttpResponseRedirect('/whatsapp/')
+            response = HttpResponseRedirect('/appmobile/messages/')
             response.set_cookie('user_id', user.id)
             return response
         else:
