@@ -3,7 +3,23 @@
   {% if list_content %}
   {% for value in list_content %}
 
-    <h3>{{value.imei_device}}</h3>
+  {% if not value.is_read %}
+      <a class="btn waves-effect waves-light green" href='/appmobile/is_valid/{{value.id}}/'>Es valido <i class="material-icons right">done</i></a>
+
+      <a class="btn waves-effect waves-light red" href='/appmobile/no_valid/{{value.id}}/'>No Es valido <i class="material-icons right">not_interested</i></a>
+      </br>
+      </br>
+  {% else %}
+      {% if value.is_valid %}
+          <div class="card-panel green accent-4">
+          <h5 class="white-text">Mensaje valido</h5>
+      {% else %}
+          <div class="card-panel red accent-4">
+          <h5 class="white-text">Mensaje no valido</h5>
+      {% endif %}
+          </div>
+  {% endif %}
+
     <div>
       <img class="responsive-img" src='data:image/png;base64,{{value.photo}}'>
     
@@ -20,6 +36,7 @@
     <div class="row">
       <div class="col s12 m10">
         <div class="card-panel blue accent-4">
+          <h5 class="white-text"> IMEI: {{value.imei_device}}</h5>
           <h5 class="white-text"> altitude: {{value.altitude}}</h5>
           <h5 class="white-text"> orientation: {{value.orientation}}</h5>
           <h5 class="white-text"> speed: {{value.speed}}</h5>

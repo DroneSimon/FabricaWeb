@@ -1,5 +1,5 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from appmobile.models import MobileDevice
@@ -34,6 +34,19 @@ def view_message(request, message_id):
     #phone_number = WhatsappReceived.objects.get(id=message_id)
     return render(request, 'appmobile/view_message.html',
                   {'list_content': list_content,})
+
+@login_required
+def no_valid(request, message_id):
+    message = MobileDevice.objects.get(id=message_id)
+    message.update(is_valid=False)
+    return redirect('app_messages')
+
+@login_required
+def is_valid(request, message_id):
+    message = MobileDevice.objects.get(id=message_id)
+    message.update(is_valid=True)
+    return redirect('app_messages')
+
 
 def services(request):
     if request.GET.get('photo') and request.GET.get('imei'):
