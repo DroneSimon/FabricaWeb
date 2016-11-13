@@ -26,6 +26,22 @@ def view_all_message(request):
                   {'messages': messages, 'size': len(list_msg), 'home': True})
 
 @login_required
+def view_all_valid_message(request):
+    list_msg = MobileDevice.objects.filter(is_valid=True).order_by('-date_creation')
+    messages = get_pagination(request, list_msg)
+
+    return render(request, 'appmobile/messages.html',
+                  {'messages': messages, 'size': len(list_msg), 'home': True})
+
+@login_required
+def view_no_valid_messages(request):
+    list_msg = MobileDevice.objects.filter(is_read=True).filter(is_valid=False).order_by('-date_creation')
+    messages = get_pagination(request, list_msg)
+
+    return render(request, 'appmobile/messages.html',
+                  {'messages': messages, 'size': len(list_msg), 'home': True})
+
+@login_required
 def view_message(request, message_id):
     message = MobileDevice.objects.get(id=message_id)
     message.update(is_read=True)
@@ -33,7 +49,7 @@ def view_message(request, message_id):
     list_content = MobileDevice.objects.filter(id=message_id)
     #phone_number = WhatsappReceived.objects.get(id=message_id)
     return render(request, 'appmobile/view_message.html',
-                  {'list_content': list_content,})
+                  {'list_content': list_content})
 
 @login_required
 def no_valid(request, message_id):

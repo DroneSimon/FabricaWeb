@@ -3,7 +3,6 @@
   {% if list_content %}
   {% for value in list_content %}
 
-  {% if value.is_read %}
       {% if value.is_valid %}
           <div class="card-panel green accent-4">
           <h5 class="white-text">Mensaje valido</h5>
@@ -12,14 +11,11 @@
           <h5 class="white-text">Mensaje no valido</h5>
       {% endif %}
           </div>
-  {% else %}
       <a class="btn waves-effect waves-light green" href='/appmobile/is_valid/{{value.id}}/'>Es valido <i class="material-icons right">done</i></a>
 
       <a class="btn waves-effect waves-light red" href='/appmobile/no_valid/{{value.id}}/'>No Es valido <i class="material-icons right">not_interested</i></a>
       </br>
       </br>
-
-  {% endif %}
 
     <div>
       <img class="responsive-img" src='data:image/png;base64,{{value.photo}}'>

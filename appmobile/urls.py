@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^message/(?P<message_id>\w+)/$', views.view_message, name='view_message'),
     url(r'^is_valid/(?P<message_id>\w+)/$', views.is_valid, name='app_is_valid'),
     url(r'^no_valid/(?P<message_id>\w+)/$', views.no_valid, name='app_no_valid'),
+    url(r'^valid/messages/$', views.view_all_valid_message, name='all_valid'),
+    url(r'^bad/messages/$', views.view_no_valid_messages, name='all_no_valid'),
 ]
